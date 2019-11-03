@@ -27,5 +27,10 @@ class ComposerServiceProvider extends ServiceProvider
             'layouts.header-main',
             'App\Http\ViewComposers\CategoryComposer'
         );
+
+        view()->composer(
+            'product.index',
+            'App\Http\ViewComposers\CategoryComposer'
+        );
     }
 }

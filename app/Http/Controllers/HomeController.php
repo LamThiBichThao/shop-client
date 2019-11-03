@@ -24,6 +24,11 @@ class HomeController extends Controller
                 $category = $data->result;
 
                 $firstData = $this->util->convertProduct($firstList);
+                foreach($category as $key => $item) {
+                    if (count($item->product) > 0) {
+                        $category[$key]->product  = $this->util->convertProduct($item->product);
+                    }
+                }
     	        return view('home.index', compact('firstData', 'category'));
             } else {
 

@@ -50,8 +50,10 @@
             <div class="col-lg-3 col-sm-4 product">
                 <div class="product__img-holder">
                     <a href="{{ route('product.detail',['id' => $product->id]) }}" class="product__link" aria-label="Product">
-                        <img src="{{ $product->cover_path[0] ? $product->cover_path[0] : url('img/default.png') }}" alt="" class="product__img">
-                        <img src="{{ $product->cover_path[1] ? $product->cover_path[1] : url('img/default.png') }}" alt="" class="product__img-back">
+                        <img src="{{ ($product->cover_path1 != null) ? $product->cover_path1 : url('img/default.png') }}" 
+                           onerror="this.onerror=null;this.src='{{ url('img/default.png') }}';" alt="" class="product__img">
+                        <img src="{{ ($product->cover_path2 != null) ? $product->cover_path2 : url('img/default1.jpg') }}" 
+                           onerror="this.onerror=null;this.src='{{ url('img/default1.jpg') }}';"alt="" class="product__img-back">
                     </a>
                     <div class="product__actions">
                         <a href="quickview.html" class="product__quickview" title="Xem ngay">
@@ -78,14 +80,14 @@
                 <span class="product__price">
                     @if($product->new_price == 0)
                     <ins>
-                        <span class="amount">{{ $product->price }} đ</span>
+                        <span class="amount">{{ $product->price }}.000 đ</span>
                     </ins>
                     @else
                     <ins>
-                        <span class="amount">{{ $product->new_price }} đ</span>
+                        <span class="amount">{{ $product->new_price }}.000 đ</span>
                     </ins>
                     <del>
-                        <span>{{ $product->price }} đ</span>
+                        <span>{{ $product->price }}.000 đ</span>
                     </del>
                     @endif
                 </span>
@@ -94,19 +96,104 @@
         </div> <!-- end row -->
       </div> <!-- end container -->
     </section> <!-- end best seller -->
-    
-    <section class="section-wrap pb-30" style="background: url(img/background/back1.jpg);">
+    @foreach ($category as $key => $value)
+    <section class="section-wrap pb-30 {{ ($key % 2 == 0) ? 'bg-home-1' : 'bg-home-2'}}">
       <div class="container">
         <div class="heading-row">
           <div class="text-center">
             <h2 class="heading bottom-line text-left white bolder">
-              Áo nữ
+              {{ $value->category->cate_name }}
             </h2>
           </div>
         </div>
         <div style="display: flex; flex-direction: row;">
           <div class="col-md-6" style="padding: 0">
             <div id="owl-demo" class="owl-carousel owl-theme">  
+              @foreach($value->product as $product)
+              <div class="product" style="margin: 0 4px;">
+                <div class="product__img-holder">
+                  <a href="{{ route('product.detail',['id' => $product->id]) }}" class="product__link" aria-label="Product">
+                    <img src="{{ ($product->cover_path1 != null) ? $product->cover_path1 : url('img/default.png') }}" 
+                      onerror="this.onerror=null;this.src='{{ url('img/default.png') }}';" alt="" class="product__img">
+                    <img src="{{ ($product->cover_path2 != null) ? $product->cover_path2 : url('img/default1.jpg') }}" 
+                      onerror="this.onerror=null;this.src='{{ url('img/default1.jpg') }}';"  alt="" class="product__img-back">
+                  </a>
+                  <div class="product__actions">
+                    <a href="quickview.html" class="product__quickview" title="Xem ngay" title="Xem ngay">
+                      <i class="ui-eye"></i>
+                      <span>Xem ngay</span>
+                    </a>
+                    <a href="cart.html" class="product__add-to-cart" title="Mua ngay">
+                      <i class="ui-bag"></i>
+                      <span>Mua ngay</span>
+                    </a>
+                    <a href="#aaaa" class="product__add-to-wishlist" title="Thêm vào giỏ hàng">
+                      <i class="fa fa-cart-plus"></i>
+                      <span>Thêm</span>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="product__details">
+                  <h3 class="product__title">
+                    <a href="{{ route('product.detail',['id' => $product->id]) }}">{{ $product->name }}</a>
+                  </h3>
+                </div>
+
+                <span class="product__price">
+                    @if($product->new_price == 0)
+                    <ins>
+                        <span class="amount">{{ $product->price }}.000 đ</span>
+                    </ins>
+                    @else
+                    <ins>
+                        <span class="amount">{{ $product->new_price }}.000 đ</span>
+                    </ins>
+                    <del>
+                        <span>{{ $product->price }}.000 đ</span>
+                    </del>
+                    @endif
+                </span>
+              </div> 
+              @endforeach
+              <!-- end product -->
+              {{-- <div class="product" style="margin: 0 4px;">
+                <div class="product__img-holder">
+                  <a href="single-product.html" class="product__link" aria-label="Product">
+                    <img src="img/shop/product_11.jpg" alt="" class="product__img">
+                    <img src="img/shop/product_back_11.jpg" alt="" class="product__img-back">
+                  </a>
+                  <div class="product__actions">
+                    <a href="quickview.html" class="product__quickview" title="Xem ngay" title="Xem ngay">
+                      <i class="ui-eye"></i>
+                      <span>Xem ngay</span>
+                    </a>
+                    <a href="cart.html" class="product__add-to-cart" title="Mua ngay">
+                      <i class="ui-bag"></i>
+                      <span>Mua ngay</span>
+                    </a>
+                    <a href="#aaaa" class="product__add-to-wishlist" title="Thêm vào giỏ hàng">
+                      <i class="fa fa-cart-plus"></i>
+                      <span>Thêm</span>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="product__details">
+                  <h3 class="product__title">
+                    <a href="single-product.html">Floral Mini Strappy</a>
+                  </h3>
+                </div>
+
+                <span class="product__price">
+                  <ins>
+                    <span class="amount">$15.99</span>
+                  </ins>
+                  <del>
+                    <span>$27.00</span>
+                  </del>
+                </span>
+              </div>
               <div class="product" style="margin: 0 4px;">
                 <div class="product__img-holder">
                   <a href="single-product.html" class="product__link" aria-label="Product">
@@ -143,7 +230,7 @@
                     <span>$27.00</span>
                   </del>
                 </span>
-              </div> <!-- end product -->
+              </div>
               <div class="product" style="margin: 0 4px;">
                 <div class="product__img-holder">
                   <a href="single-product.html" class="product__link" aria-label="Product">
@@ -180,86 +267,12 @@
                     <span>$27.00</span>
                   </del>
                 </span>
-              </div> <!-- end product -->
-              <div class="product" style="margin: 0 4px;">
-                <div class="product__img-holder">
-                  <a href="single-product.html" class="product__link" aria-label="Product">
-                    <img src="img/shop/product_11.jpg" alt="" class="product__img">
-                    <img src="img/shop/product_back_11.jpg" alt="" class="product__img-back">
-                  </a>
-                  <div class="product__actions">
-                    <a href="quickview.html" class="product__quickview" title="Xem ngay" title="Xem ngay">
-                      <i class="ui-eye"></i>
-                      <span>Xem ngay</span>
-                    </a>
-                    <a href="cart.html" class="product__add-to-cart" title="Mua ngay">
-                      <i class="ui-bag"></i>
-                      <span>Mua ngay</span>
-                    </a>
-                    <a href="#aaaa" class="product__add-to-wishlist" title="Thêm vào giỏ hàng">
-                      <i class="fa fa-cart-plus"></i>
-                      <span>Thêm</span>
-                    </a>
-                  </div>
-                </div>
-
-                <div class="product__details">
-                  <h3 class="product__title">
-                    <a href="single-product.html">Floral Mini Strappy</a>
-                  </h3>
-                </div>
-
-                <span class="product__price">
-                  <ins>
-                    <span class="amount">$15.99</span>
-                  </ins>
-                  <del>
-                    <span>$27.00</span>
-                  </del>
-                </span>
-              </div> <!-- end product -->
-              <div class="product" style="margin: 0 4px;">
-                <div class="product__img-holder">
-                  <a href="single-product.html" class="product__link" aria-label="Product">
-                    <img src="img/shop/product_11.jpg" alt="" class="product__img">
-                    <img src="img/shop/product_back_11.jpg" alt="" class="product__img-back">
-                  </a>
-                  <div class="product__actions">
-                    <a href="quickview.html" class="product__quickview" title="Xem ngay" title="Xem ngay">
-                      <i class="ui-eye"></i>
-                      <span>Xem ngay</span>
-                    </a>
-                    <a href="cart.html" class="product__add-to-cart" title="Mua ngay">
-                      <i class="ui-bag"></i>
-                      <span>Mua ngay</span>
-                    </a>
-                    <a href="#aaaa" class="product__add-to-wishlist" title="Thêm vào giỏ hàng">
-                      <i class="fa fa-cart-plus"></i>
-                      <span>Thêm</span>
-                    </a>
-                  </div>
-                </div>
-
-                <div class="product__details">
-                  <h3 class="product__title">
-                    <a href="single-product.html">Floral Mini Strappy</a>
-                  </h3>
-                </div>
-
-                <span class="product__price">
-                  <ins>
-                    <span class="amount">$15.99</span>
-                  </ins>
-                  <del>
-                    <span>$27.00</span>
-                  </del>
-                </span>
-              </div> <!-- end product -->
+              </div> --}}
             </div>
           </div>
         </div>
           <div class="text-center">
-            <a href="catalog.html">
+            <a href="{{ route('product.index', ['cate' => $value->category->id]) }}">
             <h3 class="heading text-right white bolder">
               Xem tất cả 
              <i class="fa fa-arrow-right"></i>
@@ -268,6 +281,8 @@
           </div>        
       </div>
     </section>
+    @endforeach
+    {{-- @if($categorySecond != null)
     <section class="section-wrap pb-30" style="background: url(img/background/back2.jpg);">
       <div class="container">
         <div class="heading-row">
@@ -441,6 +456,8 @@
           </div>           
       </div>
     </section>
+    @endif
+    @if($categoryThird != null)
     <section class="section-wrap pb-30" style="background: url(img/background/back1.jpg);">
       <div class="container">
         <div class="heading-row">
@@ -614,6 +631,8 @@
           </div>           
       </div>
     </section>
+    @endif
+    @if($categoryThird != null)
     <section class="section-wrap pb-30" style="background: url(img/background/back2.jpg);">
       <div class="container">
         <div class="heading-row">
@@ -787,6 +806,8 @@
           </div>           
       </div>
     </section>
+    @endif
+    @if($categoryFour != null)
     <section class="section-wrap pb-30" style="background: url(img/background/back1.jpg);">
       <div class="container">
         <div class="heading-row">
@@ -960,6 +981,7 @@
           </div>           
       </div>
     </section>
+    @endif --}}
     <!-- tin tuc -->
   <section class="section-wrap pb-30">
     <div class="container">

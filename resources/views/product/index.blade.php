@@ -28,26 +28,26 @@
             <!-- Filter -->          
             <div class="shop-filter">
               <p class="woocommerce-result-count">
-                Hiển thị: 1-12 trên 80 sản phẩm
+                Hiển thị: 1-{{ ($total < 12) ? $total : 12}} trên {{ $total }} sản phẩm
               </p>
               <span class="woocommerce-ordering-label">Sắp xếp</span>
               <form class="woocommerce-ordering">
-                <select>
-                  <option value="default-sorting">Mặc định</option>
+                <select class="filter-product">
+                  <option value="ASC" data-href="{{ route('product.index', ['cate' => Session::get('cate_id'), 'sort' => 'ASC' ]) }}">Mặc định</option>
                   <option value="price-low-to-high">Giá: từ cao tới thấp</option>
                   <option value="price-high-to-low">Giá: từ thấp tới cao</option>
-                  <option value="date">Mới hơn</option>
+                  <option value="DESC" data-href="{{ route('product.index', ['cate' => Session::get('cate_id'), 'sort' => 'DESC' ]) }}" >Mới hơn</option>
                 </select>
               </form>
             </div>
 
             <div class="row row-8">
-
-              <div class="col-md col-sm-6 product">
+              @foreach($listProduct as $key => $product)
+              <div class="col-md-3 col-sm-6 product">
                 <div class="product__img-holder">
-                  <a href="single-product.html" class="product__link">
-                    <img src="img/shop/product_1.jpg" alt="" class="product__img">
-                    <img src="img/shop/product_back_1.jpg" alt="" class="product__img-back">
+                  <a href="{{ route('product.detail',['id' => $product->id]) }}" class="product__link">
+                    <img src="{{ ($product->cover_path1 != null) ? $product->cover_path1 : url('img/default.png') }}" alt="" class="product__img">
+                    <img src="{{ ($product->cover_path2 != null) ? $product->cover_path2 : url('img/default1.jpg') }}" alt="" class="product__img-back">
                   </a>
                                 <div class="product__actions">
                 <a href="quickview.html" class="product__quickview" title="Xem ngay">
@@ -62,428 +62,34 @@
                   <i class="fa fa-cart-plus"></i>
                   <span>Thêm</span>
                 </a>
-              </div>
+                </div>
                 </div>
 
                 <div class="product__details">
                   <h3 class="product__title">
-                    <a href="single-product.html">Joeby Tailored Trouser</a>
+                    <a href="{{ route('product.detail',['id' => $product->id]) }}">{{ $product->name}}</a>
                   </h3>
                 </div>
 
                 <span class="product__price">
-                  <ins>
-                    <span class="amount">170.000đ</span>
-                  </ins>
+                    @if($product->new_price == 0)
+                    <ins>
+                        <span class="amount">{{ $product->price }}.000 đ</span>
+                    </ins>
+                    @else
+                    <ins>
+                        <span class="amount">{{ $product->new_price }}.000 đ</span>
+                    </ins>
+                    <del>
+                        <span>{{ $product->price }}.000 đ</span>
+                    </del>
+                    @endif
                 </span>
               </div> <!-- end product -->
-
-              <div class="col-md col-sm-6 product">
-                <div class="product__img-holder">
-                  <a href="single-product.html" class="product__link">
-                    <img src="img/shop/product_2.jpg" alt="" class="product__img">
-                    <img src="img/shop/product_back_2.jpg" alt="" class="product__img-back">
-                  </a>
-                                <div class="product__actions">
-                <a href="quickview.html" class="product__quickview" title="Xem ngay">
-                  <i class="ui-eye"></i>
-                  <span>Xem ngay</span>
-                </a>
-                <a href="cart.html" class="product__add-to-cart" title="Mua ngay">
-                  <i class="ui-bag"></i>
-                  <span>Mua ngay</span>
-                </a>
-                <a href="#sssssssss" class="product__add-to-wishlist" title="Thêm vào giỏ hàng">
-                  <i class="fa fa-cart-plus"></i>
-                  <span>Thêm</span>
-                </a>
-              </div>
-                </div>
-
-                <div class="product__details">
-                  <h3 class="product__title">
-                    <a href="single-product.html">Denim Hooded</a>
-                  </h3>
-                </div>
-
-                <span class="product__price">
-                  <ins>
-                    <span class="amount">300.000đ</span>
-                  </ins>
-                </span>
-              </div> <!-- end product -->
-
-              <div class="col-md col-sm-6 product">
-                <div class="product__img-holder">
-                  <a href="single-product.html" class="product__link">
-                    <img src="img/shop/product_3.jpg" alt="" class="product__img">
-                    <img src="img/shop/product_back_3.jpg" alt="" class="product__img-back">
-                  </a>
-                                <div class="product__actions">
-                <a href="quickview.html" class="product__quickview" title="Xem ngay">
-                  <i class="ui-eye"></i>
-                  <span>Xem ngay</span>
-                </a>
-                <a href="cart.html" class="product__add-to-cart" title="Mua ngay">
-                  <i class="ui-bag"></i>
-                  <span>Mua ngay</span>
-                </a>
-                <a href="#sssssssss" class="product__add-to-wishlist" title="Thêm vào giỏ hàng">
-                  <i class="fa fa-cart-plus"></i>
-                  <span>Thêm</span>
-                </a>
-              </div>
-                </div>
-
-                <div class="product__details">
-                  <h3 class="product__title">
-                    <a href="single-product.html">Mint Maxi Dress</a>
-                  </h3>
-                </div>
-
-                <span class="product__price">
-                  <ins>
-                    <span class="amount">170.000đ</span>
-                  </ins>
-                  <del>
-                    <span>300.000đ</span>
-                  </del>
-                </span>
-              </div> <!-- end product -->
-
-              <div class="col-md col-sm-6 product">
-                <div class="product__img-holder">
-                  <a href="single-product.html" class="product__link">
-                    <img src="img/shop/product_4.jpg" alt="" class="product__img">
-                    <img src="img/shop/product_back_4.jpg" alt="" class="product__img-back">
-                  </a>
-                                <div class="product__actions">
-                <a href="quickview.html" class="product__quickview" title="Xem ngay">
-                  <i class="ui-eye"></i>
-                  <span>Xem ngay</span>
-                </a>
-                <a href="cart.html" class="product__add-to-cart" title="Mua ngay">
-                  <i class="ui-bag"></i>
-                  <span>Mua ngay</span>
-                </a>
-                <a href="#sssssssss" class="product__add-to-wishlist" title="Thêm vào giỏ hàng">
-                  <i class="fa fa-cart-plus"></i>
-                  <span>Thêm</span>
-                </a>
-              </div>
-                </div>
-
-                <div class="product__details">
-                  <h3 class="product__title">
-                    <a href="single-product.html">White Flounce Dress</a>
-                  </h3>
-                </div>
-
-                <span class="product__price">
-                  <ins>
-                    <span class="amount">300.000đ</span>
-                  </ins>
-                  <del>
-                    <span>300.000đ</span>
-                  </del>
-                </span>
-              </div> <!-- end product -->  
-
+              @if( $key % 4 == 3 )
               <div class="w-100"></div>
-
-              <div class="col-md col-sm-6 product">
-                <div class="product__img-holder">
-                  <a href="single-product.html" class="product__link">
-                    <img src="img/shop/product_5.jpg" alt="" class="product__img">
-                    <img src="img/shop/product_back_5.jpg" alt="" class="product__img-back">
-                  </a>
-                                <div class="product__actions">
-                <a href="quickview.html" class="product__quickview" title="Xem ngay">
-                  <i class="ui-eye"></i>
-                  <span>Xem ngay</span>
-                </a>
-                <a href="cart.html" class="product__add-to-cart" title="Mua ngay">
-                  <i class="ui-bag"></i>
-                  <span>Mua ngay</span>
-                </a>
-                <a href="#sssssssss" class="product__add-to-wishlist" title="Thêm vào giỏ hàng">
-                  <i class="fa fa-cart-plus"></i>
-                  <span>Thêm</span>
-                </a>
-              </div>
-                </div>
-
-                <div class="product__details">
-                  <h3 class="product__title">
-                    <a href="single-product.html">Maxi dress</a>
-                  </h3>
-                </div>
-
-                <span class="product__price">
-                  <ins>
-                    <span class="amount">300.000đ</span>
-                  </ins>
-                </span>
-              </div> <!-- end product -->
-
-              <div class="col-md col-sm-6 product">
-                <div class="product__img-holder">
-                  <a href="single-product.html" class="product__link">
-                    <img src="img/shop/product_6.jpg" alt="" class="product__img">
-                    <img src="img/shop/product_back_6.jpg" alt="" class="product__img-back">
-                  </a>
-                                <div class="product__actions">
-                <a href="quickview.html" class="product__quickview" title="Xem ngay">
-                  <i class="ui-eye"></i>
-                  <span>Xem ngay</span>
-                </a>
-                <a href="cart.html" class="product__add-to-cart" title="Mua ngay">
-                  <i class="ui-bag"></i>
-                  <span>Mua ngay</span>
-                </a>
-                <a href="#sssssssss" class="product__add-to-wishlist" title="Thêm vào giỏ hàng">
-                  <i class="fa fa-cart-plus"></i>
-                  <span>Thêm</span>
-                </a>
-              </div>
-                </div>
-
-                <div class="product__details">
-                  <h3 class="product__title">
-                    <a href="single-product.html">Casual Jacket</a>
-                  </h3>
-                </div>
-
-                <span class="product__price">
-                  <ins>
-                    <span class="amount">170.000đ</span>
-                  </ins>
-                  <del>
-                    <span>300.000đ</span>
-                  </del>
-                </span>
-              </div> <!-- end product -->
-
-              <div class="col-md col-sm-6 product">
-                <div class="product__img-holder">
-                  <a href="single-product.html" class="product__link">
-                    <img src="img/shop/product_7.jpg" alt="" class="product__img">
-                    <img src="img/shop/product_back_7.jpg" alt="" class="product__img-back">
-                  </a>
-                                <div class="product__actions">
-                <a href="quickview.html" class="product__quickview" title="Xem ngay">
-                  <i class="ui-eye"></i>
-                  <span>Xem ngay</span>
-                </a>
-                <a href="cart.html" class="product__add-to-cart" title="Mua ngay">
-                  <i class="ui-bag"></i>
-                  <span>Mua ngay</span>
-                </a>
-                <a href="#sssssssss" class="product__add-to-wishlist" title="Thêm vào giỏ hàng">
-                  <i class="fa fa-cart-plus"></i>
-                  <span>Thêm</span>
-                </a>
-              </div>
-                </div>
-
-                <div class="product__details">
-                  <h3 class="product__title">
-                    <a href="single-product.html">Bounce Elegant Dress</a>
-                  </h3>
-                </div>
-
-                <span class="product__price">
-                  <ins>
-                    <span class="amount">300.000đ</span>
-                  </ins>
-                  <del>
-                    <span>300.000đ</span>
-                  </del>
-                </span>
-              </div> <!-- end product -->
-
-              <div class="col-md col-sm-6 product">
-                <div class="product__img-holder">
-                  <a href="single-product.html" class="product__link">
-                    <img src="img/shop/product_8.jpg" alt="" class="product__img">
-                    <img src="img/shop/product_back_8.jpg" alt="" class="product__img-back">
-                  </a>
-                                <div class="product__actions">
-                <a href="quickview.html" class="product__quickview" title="Xem ngay">
-                  <i class="ui-eye"></i>
-                  <span>Xem ngay</span>
-                </a>
-                <a href="cart.html" class="product__add-to-cart" title="Mua ngay">
-                  <i class="ui-bag"></i>
-                  <span>Mua ngay</span>
-                </a>
-                <a href="#sssssssss" class="product__add-to-wishlist" title="Thêm vào giỏ hàng">
-                  <i class="fa fa-cart-plus"></i>
-                  <span>Thêm</span>
-                </a>
-              </div>
-                </div>
-
-                <div class="product__details">
-                  <h3 class="product__title">
-                    <a href="single-product.html">Classic White Tailored Shirt</a>
-                  </h3>
-                </div>
-
-                <span class="product__price">
-                  <ins>
-                    <span class="amount">300.000đ</span>
-                  </ins>
-                  <del>
-                    <span>300.000đ</span>
-                  </del>
-                </span>
-              </div> <!-- end product -->
-
-              <div class="w-100"></div>
-
-              <div class="col-md col-sm-6 product">
-                <div class="product__img-holder">
-                  <a href="single-product.html" class="product__link">
-                    <img src="img/shop/product_9.jpg" alt="" class="product__img">
-                    <img src="img/shop/product_back_9.jpg" alt="" class="product__img-back">
-                  </a>
-                                <div class="product__actions">
-                <a href="quickview.html" class="product__quickview" title="Xem ngay">
-                  <i class="ui-eye"></i>
-                  <span>Xem ngay</span>
-                </a>
-                <a href="cart.html" class="product__add-to-cart" title="Mua ngay">
-                  <i class="ui-bag"></i>
-                  <span>Mua ngay</span>
-                </a>
-                <a href="#sssssssss" class="product__add-to-wishlist" title="Thêm vào giỏ hàng">
-                  <i class="fa fa-cart-plus"></i>
-                  <span>Thêm</span>
-                </a>
-              </div>
-                </div>
-
-                <div class="product__details">
-                  <h3 class="product__title">
-                    <a href="single-product.html">Men’s Belt</a>
-                  </h3>
-                </div>
-
-                <span class="product__price">
-                  <ins>
-                    <span class="amount">300.000đ</span>
-                  </ins>
-                </span>
-              </div> <!-- end product -->
-
-              <div class="col-md col-sm-6 product">
-                <div class="product__img-holder">
-                  <a href="single-product.html" class="product__link">
-                    <img src="img/shop/product_10.jpg" alt="" class="product__img">
-                    <img src="img/shop/product_back_10.jpg" alt="" class="product__img-back">
-                  </a>
-                                <div class="product__actions">
-                <a href="quickview.html" class="product__quickview" title="Xem ngay">
-                  <i class="ui-eye"></i>
-                  <span>Xem ngay</span>
-                </a>
-                <a href="cart.html" class="product__add-to-cart" title="Mua ngay">
-                  <i class="ui-bag"></i>
-                  <span>Mua ngay</span>
-                </a>
-                <a href="#sssssssss" class="product__add-to-wishlist" title="Thêm vào giỏ hàng">
-                  <i class="fa fa-cart-plus"></i>
-                  <span>Thêm</span>
-                </a>
-              </div>
-                </div>
-
-                <div class="product__details">
-                  <h3 class="product__title">
-                    <a href="single-product.html">Sport Hi Adidas</a>
-                  </h3>
-                </div>
-
-                <span class="product__price">
-                  <ins>
-                    <span class="amount">300.000đ</span>
-                  </ins>
-                </span>
-              </div> <!-- end product -->
-
-              <div class="col-md col-sm-6 product">
-                <div class="product__img-holder">
-                  <a href="single-product.html" class="product__link">
-                    <img src="img/shop/product_11.jpg" alt="" class="product__img">
-                    <img src="img/shop/product_back_11.jpg" alt="" class="product__img-back">
-                  </a>
-                                <div class="product__actions">
-                <a href="quickview.html" class="product__quickview" title="Xem ngay">
-                  <i class="ui-eye"></i>
-                  <span>Xem ngay</span>
-                </a>
-                <a href="cart.html" class="product__add-to-cart" title="Mua ngay">
-                  <i class="ui-bag"></i>
-                  <span>Mua ngay</span>
-                </a>
-                <a href="#sssssssss" class="product__add-to-wishlist" title="Thêm vào giỏ hàng">
-                  <i class="fa fa-cart-plus"></i>
-                  <span>Thêm</span>
-                </a>
-              </div>
-                </div>
-
-                <div class="product__details">
-                  <h3 class="product__title">
-                    <a href="single-product.html">Floral Mini Strappy</a>
-                  </h3>
-                </div>
-
-                <span class="product__price">
-                  <ins>
-                    <span class="amount">300.000đ</span>
-                  </ins>
-                  <del>
-                    <span>300.000đ</span>
-                  </del>
-                </span>
-              </div> <!-- end product -->
-
-              <div class="col-md col-sm-6 product">
-                <div class="product__img-holder">
-                  <a href="single-product.html" class="product__link">
-                    <img src="img/shop/product_12.jpg" alt="" class="product__img">
-                    <img src="img/shop/product_back_12.jpg" alt="" class="product__img-back">
-                  </a>
-                                <div class="product__actions">
-                <a href="quickview.html" class="product__quickview" title="Xem ngay">
-                  <i class="ui-eye"></i>
-                  <span>Xem ngay</span>
-                </a>
-                <a href="cart.html" class="product__add-to-cart" title="Mua ngay">
-                  <i class="ui-bag"></i>
-                  <span>Mua ngay</span>
-                </a>
-                <a href="#sssssssss" class="product__add-to-wishlist" title="Thêm vào giỏ hàng">
-                  <i class="fa fa-cart-plus"></i>
-                  <span>Thêm</span>
-                </a>
-              </div>
-                </div>
-
-                <div class="product__details">
-                  <h3 class="product__title">
-                    <a href="single-product.html">Hooded Jacket</a>
-                  </h3>
-                </div>
-
-                <span class="product__price">
-                  <ins>
-                    <span class="amount">300.000đ</span>
-                  </ins>
-                </span>
-              </div> <!-- end product -->
+              @endif
+              @endforeach
             
             </div> <!-- end row -->
             
@@ -516,7 +122,8 @@
                 @endforeach
               </ul>
             </div>
-
+            <form method="POST" action="{{ route('web.add.translate') }}">
+                {{ csrf_field() }}
             <!-- Size -->
             <div class="widget widget__filter-by-size widget--bottom-line">
               <h4 class="widget-title">Kích thước</h4>
@@ -579,13 +186,27 @@
               <p>
                 <label for="amount">Mức giá:</label>
                 <input type="text" id="amount">
-                <a href="#" class="btn btn-sm btn-dark"><span>Lọc</span></a>
+                <button class="btn btn-sm btn-dark"><span>Lọc</span></>
               </p>
             </div>
+            </form>
 
           </aside> <!-- end sidebar -->
 
         </div> <!-- end row -->
       </div> <!-- end container -->
     </section> <!-- end catalog -->
+@endsection
+
+@section('scripts')
+<script>
+    var sort = '{{ session('sort') }}';
+        if (sort) {
+            $('.filter-product').val(sort);
+        }
+    $('.filter-product').change(function() {
+        var href = $(".filter-product option:selected").data('href');
+        window.location.href = href;  
+    });
+</script>
 @endsection

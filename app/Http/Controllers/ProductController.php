@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\UtilController;
+use Session;
 
 class ProductController extends Controller
 {
@@ -16,22 +17,32 @@ class ProductController extends Controller
     }
 
     public function index(Request $request){
-        $category = $request->cate;
-        if ($category) {
-            $getData = @file_get_contents($this->get_product_category.$category);
-            $data = json_decode($getData);
-            $cateParent = $category;
-            
-        } else {
-            $getData = @file_get_contents($this->get_all_product);
-            $data = json_decode($getData);
-            $cateParent = null;
+        $cate_id = $request->cate ? $request->cate : null;
+        $page = $request->page ? $request->page : 1;
+        $sort = $request->sort ? $request->sort : 'ASC';
+        Session::put('sort', $sort);
 
+        if ($cate_id != null) {
+            Session::put('cate_id', $cate_id);
         }
+
+        $arr = array(
+            'cate_id' => $cate_id,
+            'page' => $page,
+            'sort_type' => $sort
+        );
+
+        $postData = $this->util->postData($this->get_all_product, $arr);
+        $data = json_decode($postData);
+        $cateParent = null;
 
         if ($data->status == 200) {
             $listCategory = $data->listCate;
-    	    return view('product.index', compact('listCategory', 'cateParent'));
+            $dataProduct = $data->result;
+            $listProduct = $this->util->convertProduct($dataProduct->data);
+            $total = $dataProduct->total;
+            $page = $dataProduct->current_page;
+    	    return view('product.index', compact('listCategory', 'cateParent', 'listProduct', 'total', 'page'));
         } else {
 
         }

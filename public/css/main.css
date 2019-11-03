@@ -1,0 +1,12 @@
+.bg-home-1 {
+    background: url('/img/background/back1.jpg');
+}
+.bg-home-2 {
+    background: url('/img/background/back2.jpg');
+}
+.catalog .product__link {
+    height: 276px;
+}
+.catalog .product__link .product__img, .product__link .product__img-back {
+    height: 100%;
+}

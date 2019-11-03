@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="{{ asset('SHOPXUATDU/css/font-icons.css')}}" />
   <link rel="stylesheet" href="{{ asset('SHOPXUATDU/css/style.css')}}" />
   <link rel="stylesheet" href="{{ asset('SHOPXUATDU/css/color.css')}}" />
+  <link rel="stylesheet" type="text/css" href="{{ asset('/css/main.css') }}" />
 
   <!-- Favicons -->
   <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}">
@@ -92,7 +93,7 @@
   <script type="text/javascript" src="{{ asset('SHOPXUATDU/js/scripts.js') }}"></script>
   <!-- script hover tintuc -->
   <script src="{{ asset('SHOPXUATDU/js/tintuc.js') }}"></script>   
-    @yield('scripts')
+  @yield('scripts')
   <!-- script hover tintuc -->  
   
 

@@ -16,4 +16,21 @@ class UtilController extends Controller
         }
         return $product_arr;
     }
+
+    public function postData($url, $arr){
+        $ch = curl_init();
+        $payload = json_encode($arr);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            'Content-type: application/json',
+            'Accept: */*'
+            ));
+        $response =curl_exec($ch);
+        curl_close($ch);
+
+        return $response;
+    }
 }
